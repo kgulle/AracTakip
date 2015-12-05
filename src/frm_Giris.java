@@ -49,6 +49,7 @@ public class frm_Giris extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giriş", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
 
         txt_kullanici.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_kullanici.setText("1");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Şifre :");
@@ -65,6 +66,7 @@ public class frm_Giris extends javax.swing.JFrame {
         });
 
         txt_sifre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_sifre.setText("1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -128,7 +130,7 @@ public class frm_Giris extends javax.swing.JFrame {
             pst.setString(2, txt_sifre.getText());
             rs=pst.executeQuery();
             if(rs.next()) {
-                JOptionPane.showMessageDialog(null, "Giriş basarili");
+             //   JOptionPane.showMessageDialog(null, "Giriş basarili");
                 frm_Anasayfa s=new  frm_Anasayfa();
                 s.setVisible(true);
                 setVisible(false);
