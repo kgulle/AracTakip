@@ -131,7 +131,7 @@ public class frm_Giris extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Giriş basarili");
                 frm_Anasayfa s=new  frm_Anasayfa();
                 s.setVisible(true);
-                
+                setVisible(false);
             } else                
                 JOptionPane.showMessageDialog(null, "Giriş basarisiz");
         } catch (Exception e) {
