@@ -6,16 +6,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import org.postgresql.*;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author kenan
- */
 public class frm_MarkaEkle extends javax.swing.JFrame {
 
     Connection conn = null;
@@ -33,15 +23,12 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
                 DLM.addElement(rs.getString("marka_ad"));
             }
             lst_markalar.setModel(DLM);
-            //  DLM=null;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
     private void cmb_markaDoldur() {
-
         try {
             String sql = "SELECT *from markalar order by marka_id";
             pst = conn.prepareStatement(sql);
@@ -52,7 +39,6 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-
     }
 
     public frm_MarkaEkle() {
@@ -120,6 +106,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "İşlemler", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 153, 255))); // NOI18N
 
         cmd_duzenle.setText("Düzenle");
+        cmd_duzenle.setEnabled(false);
         cmd_duzenle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmd_duzenleActionPerformed(evt);
@@ -129,6 +116,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         jLabel3.setText("Marka ID : ");
 
         cmd_sil.setText("Sil");
+        cmd_sil.setEnabled(false);
         cmd_sil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmd_silActionPerformed(evt);
@@ -210,7 +198,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
                 .addComponent(cmd_duzenle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmd_sil)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Dosya");
@@ -268,10 +256,10 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -280,7 +268,6 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     private void lst_markalarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_markalarValueChanged
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(null, "kenan");
-
     }//GEN-LAST:event_lst_markalarValueChanged
 
     private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
@@ -312,6 +299,9 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
+        cmd_duzenle.enable(Boolean.TRUE);
+        cmd_sil.enable(Boolean.TRUE);
+        cmd_duzenle.enable(Boolean.FALSE);
         cmb_markaAd.removeAllItems();
         cmb_markaDoldur();
         lst_markaDoldur();
@@ -319,9 +309,11 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_markaAdPopupMenuWillBecomeInvisible
 
     private void cmd_temizleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_temizleActionPerformed
-        // TODO add your handling code here:
         txt_markaId.setText(null);
         txt_markaAd.setText(null);
+        cmd_duzenle.enable(Boolean.FALSE);
+        cmd_sil.enable(Boolean.FALSE);
+
     }//GEN-LAST:event_cmd_temizleActionPerformed
 
     private void cmd_duzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_duzenleActionPerformed
@@ -329,7 +321,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         try {
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, txt_markaAd.getText() + "  Düzenlendi ");
+            JOptionPane.showMessageDialog(null, txt_markaAd.getText() + " Olarak Düzenlendi ");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -347,8 +339,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         try {
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, txt_markaAd.getText() + "  Silindi ");
-
+            JOptionPane.showMessageDialog(null, txt_markaAd.getText() + " Markası Silindi ");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -360,24 +351,18 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmd_silActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        frm_MarkaEkle s=new  frm_MarkaEkle();
+        frm_MarkaEkle s = new frm_MarkaEkle();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -400,7 +385,6 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frm_MarkaEkle().setVisible(true);
