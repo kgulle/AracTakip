@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -7,12 +6,11 @@ import javax.swing.*;
 import org.postgresql.*;
 
 public class frm_MarkaEkle extends javax.swing.JFrame {
-
     Connection conn = null;
     PreparedStatement pst = null;
     Statement stmt = null;
     ResultSet rs = null;
-
+    
     private void lst_markaDoldur() {
         DefaultListModel DLM = new DefaultListModel();
         String sql = "select * from markalar order by marka_id";
@@ -27,7 +25,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+    
     private void cmb_markaDoldur() {
         try {
             String sql = "SELECT *from markalar order by marka_id";
@@ -40,14 +38,14 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-
+    
     public frm_MarkaEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
         lst_markaDoldur();
         cmb_markaDoldur();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -266,12 +264,9 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lst_markalarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_markalarValueChanged
-        // TODO add your handling code here:
-        //JOptionPane.showMessageDialog(null, "kenan");
     }//GEN-LAST:event_lst_markalarValueChanged
 
     private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
-        // TODO add your handling code here:
         String sql = "INSERT INTO markalar (marka_ad) VALUES ('" + txt_markaAd.getText() + "')";
         try {
             pst = conn.prepareStatement(sql);
@@ -286,7 +281,6 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmd_ekleActionPerformed
 
     private void cmb_markaAdPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_markaAdPopupMenuWillBecomeInvisible
-        // TODO add your handling code here:
         String tmp = (String) cmb_markaAd.getSelectedItem();
         String sql = "select *from markalar where marka_ad=?";
         try {
@@ -299,21 +293,19 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-        cmd_duzenle.enable(Boolean.TRUE);
-        cmd_sil.enable(Boolean.TRUE);
-        cmd_duzenle.enable(Boolean.FALSE);
+        cmd_duzenle.setEnabled(true);
+        cmd_sil.setEnabled(true);
+        cmd_ekle.setEnabled(false);
         cmb_markaAd.removeAllItems();
         cmb_markaDoldur();
         lst_markaDoldur();
-
     }//GEN-LAST:event_cmb_markaAdPopupMenuWillBecomeInvisible
 
     private void cmd_temizleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_temizleActionPerformed
         txt_markaId.setText(null);
         txt_markaAd.setText(null);
-        cmd_duzenle.enable(Boolean.FALSE);
-        cmd_sil.enable(Boolean.FALSE);
-
+        cmd_duzenle.setEnabled(false);
+        cmd_sil.setEnabled(false);
     }//GEN-LAST:event_cmd_temizleActionPerformed
 
     private void cmd_duzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_duzenleActionPerformed
@@ -332,6 +324,9 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         txt_markaAd.setText(null);
         txt_markaId.setText(null);
         txt_markaAd.setText(null);
+        cmd_duzenle.setEnabled(false);
+        cmd_sil.setEnabled(false);
+        cmd_ekle.setEnabled(false);
     }//GEN-LAST:event_cmd_duzenleActionPerformed
 
     private void cmd_silActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_silActionPerformed
@@ -348,6 +343,9 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         lst_markaDoldur();
         txt_markaId.setText(null);
         txt_markaAd.setText(null);
+        cmd_duzenle.setEnabled(false);
+        cmd_sil.setEnabled(false);
+        cmd_ekle.setEnabled(true);
     }//GEN-LAST:event_cmd_silActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -361,7 +359,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
+    
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
