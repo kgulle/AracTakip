@@ -27,52 +27,57 @@ public class frm_Anasayfa extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu_Dosya = new javax.swing.JMenu();
+        jMenu_Ekle = new javax.swing.JMenu();
+        jMenu_markaEkle = new javax.swing.JMenuItem();
+        jMenu_ModelEkle = new javax.swing.JMenuItem();
+        jMenu_aracEkle = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu_hakkinda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("[ Araç Takip Programı ]");
 
-        jMenu1.setText("Dosya");
-        jMenuBar1.add(jMenu1);
+        jMenu_Dosya.setText("Dosya");
+        jMenuBar1.add(jMenu_Dosya);
 
-        jMenu3.setText("Ekle");
+        jMenu_Ekle.setText("Ekle");
 
-        jMenuItem2.setText("Marka Ekle");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_markaEkle.setText("Marka Ekle");
+        jMenu_markaEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenu_markaEkleActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        jMenu_Ekle.add(jMenu_markaEkle);
 
-        jMenuItem3.setText("Model Ekle");
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setText("Araç Ekle");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_ModelEkle.setText("Model Ekle");
+        jMenu_ModelEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenu_ModelEkleActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem4);
+        jMenu_Ekle.add(jMenu_ModelEkle);
 
-        jMenuBar1.add(jMenu3);
+        jMenu_aracEkle.setText("Araç Ekle");
+        jMenu_aracEkle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_aracEkleActionPerformed(evt);
+            }
+        });
+        jMenu_Ekle.add(jMenu_aracEkle);
+
+        jMenuBar1.add(jMenu_Ekle);
 
         jMenu2.setText("Yardım");
 
-        jMenuItem1.setText("Hakkında");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_hakkinda.setText("Hakkında");
+        jMenu_hakkinda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenu_hakkindaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(jMenu_hakkinda);
 
         jMenuBar1.add(jMenu2);
 
@@ -92,19 +97,25 @@ public class frm_Anasayfa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenu_hakkindaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_hakkindaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenu_hakkindaActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenu_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_aracEkleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenu_aracEkleActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       frm_MarkaEkle s=new  frm_MarkaEkle();
-                s.setVisible(true);
-                setVisible(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void jMenu_markaEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_markaEkleActionPerformed
+        frm_MarkaEkle s = new frm_MarkaEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jMenu_markaEkleActionPerformed
+
+    private void jMenu_ModelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ModelEkleActionPerformed
+        frm_modelEkle s = new frm_modelEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jMenu_ModelEkleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,13 +153,13 @@ public class frm_Anasayfa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenu jMenu_Dosya;
+    private javax.swing.JMenu jMenu_Ekle;
+    private javax.swing.JMenuItem jMenu_ModelEkle;
+    private javax.swing.JMenuItem jMenu_aracEkle;
+    private javax.swing.JMenuItem jMenu_hakkinda;
+    private javax.swing.JMenuItem jMenu_markaEkle;
     // End of variables declaration//GEN-END:variables
 }

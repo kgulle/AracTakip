@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -6,17 +7,19 @@ import javax.swing.*;
 import org.postgresql.*;
 
 public class frm_MarkaEkle extends javax.swing.JFrame {
+
     Connection conn = null;
     PreparedStatement pst = null;
     Statement stmt = null;
     ResultSet rs = null;
-    
+
     private void lst_markaDoldur() {
         DefaultListModel DLM = new DefaultListModel();
         String sql = "select * from markalar order by marka_id";
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
+            DLM.addElement("");
             while (rs.next()) {
                 DLM.addElement(rs.getString("marka_ad"));
             }
@@ -25,12 +28,13 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     private void cmb_markaDoldur() {
         try {
             String sql = "SELECT *from markalar order by marka_id";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
+            cmb_markaAd.addItem("");
             while (rs.next()) {
                 String marka_ad = rs.getString("marka_ad");
                 cmb_markaAd.addItem(marka_ad);
@@ -38,14 +42,14 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    
+
     public frm_MarkaEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
         lst_markaDoldur();
         cmb_markaDoldur();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -65,12 +69,12 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         cmb_markaAd = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu_Ekle = new javax.swing.JMenu();
+        jMenu_markaEkle = new javax.swing.JMenuItem();
+        jMenu_modelEkle = new javax.swing.JMenuItem();
+        jMenu_aracEkle = new javax.swing.JMenuItem();
+        jMenu_Yardim = new javax.swing.JMenu();
+        jMenu_hakkinda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Marka Ekle");
@@ -90,8 +94,8 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -202,40 +206,45 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         jMenu1.setText("Dosya");
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Ekle");
+        jMenu_Ekle.setText("Ekle");
 
-        jMenuItem2.setText("Marka Ekle");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_markaEkle.setText("Marka Ekle");
+        jMenu_markaEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenu_markaEkleActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        jMenu_Ekle.add(jMenu_markaEkle);
 
-        jMenuItem3.setText("Model Ekle");
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setText("Araç Ekle");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_modelEkle.setText("Model Ekle");
+        jMenu_modelEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenu_modelEkleActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem4);
+        jMenu_Ekle.add(jMenu_modelEkle);
 
-        jMenuBar1.add(jMenu3);
-
-        jMenu2.setText("Yardım");
-
-        jMenuItem1.setText("Hakkında");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenu_aracEkle.setText("Araç Ekle");
+        jMenu_aracEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenu_aracEkleActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu_Ekle.add(jMenu_aracEkle);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu_Ekle);
+
+        jMenu_Yardim.setText("Yardım");
+
+        jMenu_hakkinda.setText("Hakkında");
+        jMenu_hakkinda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_hakkindaActionPerformed(evt);
+            }
+        });
+        jMenu_Yardim.add(jMenu_hakkinda);
+
+        jMenuBar1.add(jMenu_Yardim);
 
         setJMenuBar(jMenuBar1);
 
@@ -306,6 +315,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         txt_markaAd.setText(null);
         cmd_duzenle.setEnabled(false);
         cmd_sil.setEnabled(false);
+        cmd_ekle.setEnabled(true);
     }//GEN-LAST:event_cmd_temizleActionPerformed
 
     private void cmd_duzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_duzenleActionPerformed
@@ -348,18 +358,24 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
         cmd_ekle.setEnabled(true);
     }//GEN-LAST:event_cmd_silActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenu_markaEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_markaEkleActionPerformed
         frm_MarkaEkle s = new frm_MarkaEkle();
         s.setVisible(true);
         setVisible(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenu_markaEkleActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void jMenu_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_aracEkleActionPerformed
+    }//GEN-LAST:event_jMenu_aracEkleActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
+    private void jMenu_hakkindaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_hakkindaActionPerformed
+    }//GEN-LAST:event_jMenu_hakkindaActionPerformed
+
+    private void jMenu_modelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_modelEkleActionPerformed
+        frm_modelEkle s = new frm_modelEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jMenu_modelEkleActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -399,13 +415,13 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenu jMenu_Ekle;
+    private javax.swing.JMenu jMenu_Yardim;
+    private javax.swing.JMenuItem jMenu_aracEkle;
+    private javax.swing.JMenuItem jMenu_hakkinda;
+    private javax.swing.JMenuItem jMenu_markaEkle;
+    private javax.swing.JMenuItem jMenu_modelEkle;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
