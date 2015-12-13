@@ -1,3 +1,4 @@
+
 import java.sql.*;
 import javax.swing.*;
 
@@ -8,11 +9,14 @@ public class frm_AracEkle extends javax.swing.JFrame {
     Statement stmt = null;
     ResultSet rs = null;
     Integer tmpMarkalId = null;
-  //  String tmpModelAd = null;
     Integer tmpModelId = null;
+    Integer tmpRenkId = null;
+    Integer tmpHacimId = null;
+    String tmpPlaka = null;
 
     private void cmb_markaDoldur() {
         try {
+           
             String sql = "SELECT * from markalar order by marka_id";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -27,6 +31,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
     private void cmb_modelDoldur() {
         DefaultListModel DLM = new DefaultListModel();
+        //DLM=null;
+        cmb_model.removeAllItems();
         String sql = "SELECT t1.model_ad FROM modeller As t1 join markalar AS t2 on t1.marka_id=t2.marka_id where t1.marka_id=" + tmpMarkalId + ";";
         try {
             pst = conn.prepareStatement(sql);
@@ -40,7 +46,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
         }
     }
 
-        private void cmb_hacimDodur() {
+    private void cmb_hacimDodur() {
         try {
             String sql = "SELECT * from hacimler order by hacim_id";
             pst = conn.prepareStatement(sql);
@@ -53,8 +59,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-        
-         private void cmb_renkDodur() {
+
+    private void cmb_renkDodur() {
         try {
             String sql = "SELECT * from renkler order by renk_id";
             pst = conn.prepareStatement(sql);
@@ -67,8 +73,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    
-      private void lst_aracDoldur() {
+
+    private void lst_aracDoldur() {
         DefaultListModel DLM = new DefaultListModel();
         String sql = "select * from araclar order by arac_id";
         try {
@@ -83,7 +89,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-      
+
     public frm_AracEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
@@ -119,8 +125,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cmb_yil = new javax.swing.JComboBox<>();
         txt_kiraUcret = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cmd_aracEkle = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -149,6 +154,15 @@ public class frm_AracEkle extends javax.swing.JFrame {
         cmb_yakitTip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Benzin", "LPG", "Benzin & LPG" }));
 
         cmb_model.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
+        cmb_model.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cmb_modelPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         cmb_model.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 cmb_modelPropertyChange(evt);
@@ -175,8 +189,26 @@ public class frm_AracEkle extends javax.swing.JFrame {
         txt_km.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
 
         cmb_hacim.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
+        cmb_hacim.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cmb_hacimPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         cmb_renk.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
+        cmb_renk.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cmb_renkPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
         jLabel12.setText("Yakıt Tipi");
@@ -209,17 +241,13 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
         txt_kiraUcret.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton1.setText("Ekle");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cmd_aracEkle.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cmd_aracEkle.setText("Ekle");
+        cmd_aracEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cmd_aracEkleActionPerformed(evt);
             }
         });
-
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton2.setText("Sil");
-        jButton2.setEnabled(false);
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jButton3.setText("Düzenle");
@@ -243,10 +271,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addGap(58, 58, 58)
+                        .addComponent(cmd_aracEkle))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -338,14 +364,12 @@ public class frm_AracEkle extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(cmd_aracEkle))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Araçlar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 153, 255))); // NOI18N
 
-        lst_araclar.setEnabled(false);
         lst_araclar.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lst_araclarValueChanged(evt);
@@ -459,9 +483,17 @@ public class frm_AracEkle extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu_hakkindaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void cmd_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_aracEkleActionPerformed
+        String sql = "INSERT INTO araclar( plaka, marka_id, model_id, yil, vites, yakit_tip, renk_id, beygir, hacim_id, km, kira_ucreti) VALUES ( '" + txt_plaka.getText() + "'," + tmpMarkalId + "," + tmpModelId + "," + cmb_yil.getSelectedItem() + "," + cmb_vites.getSelectedIndex() + "," + cmb_yakitTip.getSelectedIndex() + "," + tmpRenkId + ",'" + txt_beygir.getText() + "'," + tmpHacimId + "," + txt_km.getText() + ",'" + txt_kiraUcret.getText() + "' )";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.executeQuery();
+            JOptionPane.showMessageDialog(null, "kayıt eklendi");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        lst_aracDoldur();
+    }//GEN-LAST:event_cmd_aracEkleActionPerformed
 
     private void cmb_markaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_markaPopupMenuWillBecomeInvisible
         String tmpMarka = (String) cmb_marka.getSelectedItem();
@@ -479,6 +511,63 @@ public class frm_AracEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_markaPopupMenuWillBecomeInvisible
 
     private void cmb_modelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmb_modelPropertyChange
+
+    }//GEN-LAST:event_cmb_modelPropertyChange
+
+    private void lst_araclarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_araclarValueChanged
+        String tmpArac = (String) lst_araclar.getSelectedValue();
+        String sql = "select *from araclar where plaka=?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tmpArac);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                tmpPlaka=rs.getString("plaka");
+                txt_plaka.setText(tmpPlaka);
+                tmpMarkalId = rs.getInt("marka_id");
+                tmpModelId = rs.getInt("model_id");
+                tmpHacimId = rs.getInt("hacim");
+                tmpRenkId = rs.getInt("renk");
+                txt_beygir.setText(rs.getString("beygir"));
+                txt_km.setText(rs.getString("km"));
+                txt_kiraUcret.setText(rs.getString("kira_ucret"));
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_lst_araclarValueChanged
+
+    private void cmb_renkPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_renkPopupMenuWillBecomeInvisible
+        String tmpRenk = (String) cmb_renk.getSelectedItem();
+        String sql = "select *from renkler where renk_ad=?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tmpRenk);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                tmpRenkId = rs.getInt("renk_id");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cmb_renkPopupMenuWillBecomeInvisible
+
+    private void cmb_hacimPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_hacimPopupMenuWillBecomeInvisible
+        String tmpHacim = (String) cmb_hacim.getSelectedItem();
+        String sql = "select *from hacimler where hacim_ad=?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tmpHacim);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                tmpHacimId = rs.getInt("hacim_id");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cmb_hacimPopupMenuWillBecomeInvisible
+
+
+
+
+    private void cmb_modelPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_modelPopupMenuWillBecomeInvisible
         String tmpModel = (String) cmb_model.getSelectedItem();
         String sql = "select *from modeller where model_ad=?";
         try {
@@ -486,21 +575,16 @@ public class frm_AracEkle extends javax.swing.JFrame {
             pst.setString(1, tmpModel);
             rs = pst.executeQuery();
             if (rs.next()) {
-                tmpModelId = rs.getInt("marka_id");
+                tmpModelId = rs.getInt("model_id");
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_cmb_modelPropertyChange
-
-    private void lst_araclarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_araclarValueChanged
-
-    }//GEN-LAST:event_lst_araclarValueChanged
+    }//GEN-LAST:event_cmb_modelPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+  public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -513,17 +597,15 @@ public class frm_AracEkle extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_AracEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_AracEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_AracEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_AracEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frm_AracEkle().setVisible(true);
@@ -539,8 +621,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_vites;
     private javax.swing.JComboBox<String> cmb_yakitTip;
     private javax.swing.JComboBox<String> cmb_yil;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cmd_aracEkle;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
