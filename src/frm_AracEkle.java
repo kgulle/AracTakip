@@ -16,7 +16,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
     private void cmb_markaDoldur() {
         try {
-           
+
             String sql = "SELECT * from markalar order by marka_id";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -76,7 +76,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
     private void lst_aracDoldur() {
         DefaultListModel DLM = new DefaultListModel();
-        String sql = "select * from araclar order by arac_id";
+        String sql = "select * from araclar order by plaka";
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -129,6 +129,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lst_araclar = new javax.swing.JList<>();
@@ -260,6 +261,13 @@ public class frm_AracEkle extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
         jLabel11.setText("Günlük Kira Ücreti");
 
+        jButton1.setText("Sil");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -271,7 +279,9 @@ public class frm_AracEkle extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addGap(58, 58, 58)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmd_aracEkle))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +312,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
                                 .addComponent(txt_beygir)
                                 .addComponent(cmb_renk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmb_yakitTip, 0, 154, Short.MAX_VALUE))
-                            .addComponent(cmb_hacim, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmb_hacim, 0, 154, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -364,7 +374,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3)
-                    .addComponent(cmd_aracEkle))
+                    .addComponent(cmd_aracEkle)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -484,7 +495,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_hakkindaActionPerformed
 
     private void cmd_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_aracEkleActionPerformed
-        String sql = "INSERT INTO araclar( plaka, marka_id, model_id, yil, vites, yakit_tip, renk_id, beygir, hacim_id, km, kira_ucreti) VALUES ( '" + txt_plaka.getText() + "'," + tmpMarkalId + "," + tmpModelId + "," + cmb_yil.getSelectedItem() + "," + cmb_vites.getSelectedIndex() + "," + cmb_yakitTip.getSelectedIndex() + "," + tmpRenkId + ",'" + txt_beygir.getText() + "'," + tmpHacimId + "," + txt_km.getText() + ",'" + txt_kiraUcret.getText() + "' )";
+        String sql = "INSERT INTO araclar( plaka, marka_id, model_id, yil, vites, yakit_tip, renk_id, beygir, hacim_id, km, kira_ucret) VALUES ( '" + txt_plaka.getText() + "'," + tmpMarkalId + "," + tmpModelId + "," + cmb_yil.getSelectedItem() + "," + cmb_vites.getSelectedIndex() + "," + cmb_yakitTip.getSelectedIndex() + "," + tmpRenkId + ",'" + txt_beygir.getText() + "'," + tmpHacimId + "," + txt_km.getText() + ",'" + txt_kiraUcret.getText() + "' )";
         try {
             pst = conn.prepareStatement(sql);
             pst.executeQuery();
@@ -516,21 +527,21 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
     private void lst_araclarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_araclarValueChanged
         String tmpArac = (String) lst_araclar.getSelectedValue();
-        String sql = "select *from araclar where plaka=?";
+        String sql = "select * from araclar where plaka=?";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, tmpArac);
             rs = pst.executeQuery();
             if (rs.next()) {
-                tmpPlaka=rs.getString("plaka");
+                txt_beygir.setText(rs.getString("beygir"));
+                txt_km.setText(rs.getString("km"));
+                txt_kiraUcret.setText(rs.getString("kira_ucret"));
+                tmpPlaka = rs.getString("plaka");
                 txt_plaka.setText(tmpPlaka);
                 tmpMarkalId = rs.getInt("marka_id");
                 tmpModelId = rs.getInt("model_id");
                 tmpHacimId = rs.getInt("hacim");
                 tmpRenkId = rs.getInt("renk");
-                txt_beygir.setText(rs.getString("beygir"));
-                txt_km.setText(rs.getString("km"));
-                txt_kiraUcret.setText(rs.getString("kira_ucret"));
             }
         } catch (Exception e) {
         }
@@ -565,8 +576,6 @@ public class frm_AracEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_hacimPopupMenuWillBecomeInvisible
 
 
-
-
     private void cmb_modelPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_modelPopupMenuWillBecomeInvisible
         String tmpModel = (String) cmb_model.getSelectedItem();
         String sql = "select *from modeller where model_ad=?";
@@ -581,10 +590,23 @@ public class frm_AracEkle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmb_modelPopupMenuWillBecomeInvisible
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String sql = "delete from araclar where plaka='" + tmpPlaka + "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, tmpPlaka + " Araci Silindi ");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        lst_aracDoldur();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-  public static void main(String args[]) {
+    public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -622,6 +644,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_yakitTip;
     private javax.swing.JComboBox<String> cmb_yil;
     private javax.swing.JButton cmd_aracEkle;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
