@@ -125,11 +125,11 @@ public class frm_AracEkle extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cmb_yil = new javax.swing.JComboBox<>();
         txt_kiraUcret = new javax.swing.JTextField();
-        cmd_aracEkle = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        cmd_ekle = new javax.swing.JButton();
+        cmd_duzenle = new javax.swing.JButton();
+        cmd_temizle = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cmd_sil = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lst_araclar = new javax.swing.JList<>();
@@ -242,29 +242,39 @@ public class frm_AracEkle extends javax.swing.JFrame {
 
         txt_kiraUcret.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
 
-        cmd_aracEkle.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        cmd_aracEkle.setText("Ekle");
-        cmd_aracEkle.addActionListener(new java.awt.event.ActionListener() {
+        cmd_ekle.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cmd_ekle.setText("Ekle");
+        cmd_ekle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmd_aracEkleActionPerformed(evt);
+                cmd_ekleActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton3.setText("Düzenle");
-        jButton3.setEnabled(false);
+        cmd_duzenle.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cmd_duzenle.setText("Düzenle");
+        cmd_duzenle.setEnabled(false);
+        cmd_duzenle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmd_duzenleActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton4.setText("Temizle");
-        jButton4.setEnabled(false);
+        cmd_temizle.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cmd_temizle.setText("Temizle");
+        cmd_temizle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmd_temizleActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
         jLabel11.setText("Günlük Kira Ücreti");
 
-        jButton1.setText("Sil");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cmd_sil.setText("Sil");
+        cmd_sil.setEnabled(false);
+        cmd_sil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cmd_silActionPerformed(evt);
             }
         });
 
@@ -276,13 +286,13 @@ public class frm_AracEkle extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmd_temizle, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(cmd_duzenle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(cmd_sil)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmd_aracEkle))
+                        .addComponent(cmd_ekle))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -372,10 +382,10 @@ public class frm_AracEkle extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(cmd_aracEkle)
-                    .addComponent(jButton1))
+                    .addComponent(cmd_temizle)
+                    .addComponent(cmd_duzenle)
+                    .addComponent(cmd_ekle)
+                    .addComponent(cmd_sil))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -494,7 +504,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu_hakkindaActionPerformed
 
-    private void cmd_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_aracEkleActionPerformed
+    private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
         String sql = "INSERT INTO araclar( plaka, marka_id, model_id, yil, vites, yakit_tip, renk_id, beygir, hacim_id, km, kira_ucret) VALUES ( '" + txt_plaka.getText() + "'," + tmpMarkalId + "," + tmpModelId + "," + cmb_yil.getSelectedItem() + "," + cmb_vites.getSelectedIndex() + "," + cmb_yakitTip.getSelectedIndex() + "," + tmpRenkId + ",'" + txt_beygir.getText() + "'," + tmpHacimId + "," + txt_km.getText() + ",'" + txt_kiraUcret.getText() + "' )";
         try {
             pst = conn.prepareStatement(sql);
@@ -504,7 +514,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         lst_aracDoldur();
-    }//GEN-LAST:event_cmd_aracEkleActionPerformed
+        cmd_temizleActionPerformed(evt);
+    }//GEN-LAST:event_cmd_ekleActionPerformed
 
     private void cmb_markaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_markaPopupMenuWillBecomeInvisible
         String tmpMarka = (String) cmb_marka.getSelectedItem();
@@ -536,6 +547,8 @@ public class frm_AracEkle extends javax.swing.JFrame {
                 txt_beygir.setText(rs.getString("beygir"));
                 txt_km.setText(rs.getString("km"));
                 txt_kiraUcret.setText(rs.getString("kira_ucret"));
+                cmb_yakitTip.setSelectedIndex(rs.getInt("yakit_tip"));
+                cmb_vites.setSelectedIndex(rs.getInt("vites"));
                 tmpPlaka = rs.getString("plaka");
                 txt_plaka.setText(tmpPlaka);
                 tmpMarkalId = rs.getInt("marka_id");
@@ -545,6 +558,10 @@ public class frm_AracEkle extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
+        cmd_sil.setEnabled(true);
+        cmd_ekle.setEnabled(false);
+        cmd_duzenle.setEnabled(true);
+
     }//GEN-LAST:event_lst_araclarValueChanged
 
     private void cmb_renkPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_renkPopupMenuWillBecomeInvisible
@@ -590,7 +607,7 @@ public class frm_AracEkle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmb_modelPopupMenuWillBecomeInvisible
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cmd_silActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_silActionPerformed
         String sql = "delete from araclar where plaka='" + tmpPlaka + "'";
         try {
             pst = conn.prepareStatement(sql);
@@ -600,8 +617,38 @@ public class frm_AracEkle extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         lst_aracDoldur();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        cmd_temizleActionPerformed(evt);
+    }//GEN-LAST:event_cmd_silActionPerformed
+
+    private void cmd_temizleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_temizleActionPerformed
+
+        txt_beygir.setText(null);
+        txt_km.setText(null);
+        txt_kiraUcret.setText(null);
+        cmd_sil.setEnabled(false);
+        cmd_ekle.setEnabled(true);
+        cmd_duzenle.setEnabled(false);
+        txt_plaka.setText(null);
+        cmb_marka.setSelectedIndex(0);
+        cmb_model.setSelectedIndex(0);
+        cmb_yil.setSelectedIndex(0);
+        cmb_vites.setSelectedIndex(0);
+        cmb_yakitTip.setSelectedIndex(0);
+        cmb_renk.setSelectedIndex(0);
+        txt_plaka.setEnabled(true);
+    }//GEN-LAST:event_cmd_temizleActionPerformed
+
+    private void cmd_duzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_duzenleActionPerformed
+        String sql = "UPDATE araclar SET plaka='" + txt_plaka.getText() + "', marka_id=" + tmpMarkalId + ", model_id=" + tmpModelId + ", yil=" + cmb_yil.getSelectedItem() + ", vites=" + cmb_vites.getSelectedIndex() + ", yakit_tip=" + cmb_yakitTip.getSelectedIndex() + ", renk_id=" + tmpRenkId + ", beygir='" + txt_beygir.getText() + "', hacim_id=" + tmpHacimId + ", km=" + txt_km.getText() + ", kira_ucret='" + txt_kiraUcret.getText() + "' WHERE plaka='" + lst_araclar.getSelectedValue() + "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.executeQuery();
+            JOptionPane.showMessageDialog(null, "kayıt Duzenlendi");
+        } catch (Exception e) {
+          //  JOptionPane.showMessageDialog(null, e);
+        }
+        lst_aracDoldur();
+    }//GEN-LAST:event_cmd_duzenleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -643,10 +690,10 @@ public class frm_AracEkle extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_vites;
     private javax.swing.JComboBox<String> cmb_yakitTip;
     private javax.swing.JComboBox<String> cmb_yil;
-    private javax.swing.JButton cmd_aracEkle;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton cmd_duzenle;
+    private javax.swing.JButton cmd_ekle;
+    private javax.swing.JButton cmd_sil;
+    private javax.swing.JButton cmd_temizle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
