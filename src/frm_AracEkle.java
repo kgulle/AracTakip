@@ -1,9 +1,7 @@
-
 import java.sql.*;
 import javax.swing.*;
 
 public class frm_AracEkle extends javax.swing.JFrame {
-
     Connection conn = null;
     PreparedStatement pst = null;
     Statement stmt = null;
