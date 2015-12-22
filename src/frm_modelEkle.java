@@ -1,7 +1,7 @@
 import java.sql.*;
 import javax.swing.*;
 
-public class frm_modelEkle extends javax.swing.JFrame {
+public class frm_ModelEkle extends javax.swing.JFrame {
 
     Connection conn = null;
     PreparedStatement pst = null;
@@ -40,7 +40,7 @@ public class frm_modelEkle extends javax.swing.JFrame {
         }
     }
 
-    public frm_modelEkle() {
+    public frm_ModelEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
         cmb_markaDoldur();
@@ -277,7 +277,7 @@ public class frm_modelEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_markaEkleActionPerformed
 
     private void jMenu_modelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_modelEkleActionPerformed
-        frm_modelEkle s = new frm_modelEkle();
+        frm_ModelEkle s = new frm_ModelEkle();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenu_modelEkleActionPerformed
@@ -378,18 +378,18 @@ public class frm_modelEkle extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_ModelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_ModelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_ModelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_modelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_ModelEkle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frm_modelEkle().setVisible(true);
+                new frm_ModelEkle().setVisible(true);
             }
         });
     }
