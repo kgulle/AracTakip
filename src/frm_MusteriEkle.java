@@ -458,7 +458,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
-        String sql = "INSERT INTO musteriler (tc,ad,soyad,adres,telefon1,telefon2,dogum_tarih,dogum_yeri) VALUES (" + txt_tc.getText() + ",'" + txt_ad.getText() + "','" + txt_soyad.getText() + "','" + txt_adres.getText() + "'," + txt_telefon1.getText() + "," + txt_telefon2.getText() + ",'" + txt_dogumTarih.getText() + "','" + txt_dogumYer.getText() + "')";
+        String sql = "INSERT INTO musteriler (tc,ad,soyad,adres,telefon1,telefon2,dogum_tarih,dogum_yeri,eposta) VALUES (" + txt_tc.getText() + ",'" + txt_ad.getText() + "','" + txt_soyad.getText() + "','" + txt_adres.getText() + "'," + txt_telefon1.getText() + "," + txt_telefon2.getText() + ",'" + txt_dogumTarih.getText() + "','" + txt_dogumYer.getText() + "','" + txt_ePosta.getText() + "')";
         
         try {
             pst = conn.prepareStatement(sql);
@@ -592,7 +592,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_dogumTarihActionPerformed
 
     private void menu_kirayaVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_kirayaVerActionPerformed
-        frm_AracEkle s = new frm_AracEkle();
+        frm_KirayaVer s = new frm_KirayaVer();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_menu_kirayaVerActionPerformed

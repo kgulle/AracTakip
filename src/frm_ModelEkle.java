@@ -374,7 +374,7 @@ public class frm_ModelEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_cmd_modelSilActionPerformed
 
     private void menu_kirayaVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_kirayaVerActionPerformed
-        frm_AracEkle s = new frm_AracEkle();
+        frm_KirayaVer s = new frm_KirayaVer();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_menu_kirayaVerActionPerformed

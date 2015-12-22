@@ -53,7 +53,7 @@ public class frm_KirayaVer extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                DLM.addElement(rs.getString("plaka")+"     "+rs.getString("tc")+"                   "+rs.getString("kira_suresi"));
+                DLM.addElement(rs.getString("plaka") + "     " + rs.getString("tc") + "                   " + rs.getString("kira_suresi"));
             }
             lst_kiradakiler.setModel(DLM);
         } catch (Exception e) {
@@ -279,7 +279,7 @@ public class frm_KirayaVer extends javax.swing.JFrame {
         jScrollPane3.setViewportView(lst_kiradakiler);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel7.setText("Plaka                TC                               Kira Süresi");
+        jLabel7.setText("Plaka                            TC                         Kira Süresi");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -288,8 +288,8 @@ public class frm_KirayaVer extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -402,7 +402,17 @@ public class frm_KirayaVer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        String sql = "delete from arackira where plaka='" + lst_musteriArac.getSelectedValue()+ "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, cmb_musteriler2.getSelectedItem() + " kiradan alındı");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        cmb_aracDoldur();
+        lst_arackiraDoldur();
+        cmb_musteriler2PopupMenuWillBecomeInvisible(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmb_musterilerPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmb_musterilerPopupMenuWillBecomeInvisible
@@ -419,7 +429,7 @@ public class frm_KirayaVer extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             pst.executeQuery();
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
         }
         lst_arackiraDoldur();
     }//GEN-LAST:event_cmd_kirayaVerActionPerformed
@@ -442,7 +452,7 @@ public class frm_KirayaVer extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_musteriler2PopupMenuWillBecomeInvisible
 
     private void menu_kirayaVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_kirayaVerActionPerformed
-        frm_AracEkle s = new frm_AracEkle();
+        frm_KirayaVer s = new frm_KirayaVer();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_menu_kirayaVerActionPerformed
