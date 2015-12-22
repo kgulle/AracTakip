@@ -371,7 +371,7 @@ public class frm_MarkaEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_hakkindaActionPerformed
 
     private void jMenu_modelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_modelEkleActionPerformed
-        frm_modelEkle s = new frm_modelEkle();
+        frm_ModelEkle s = new frm_ModelEkle();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenu_modelEkleActionPerformed

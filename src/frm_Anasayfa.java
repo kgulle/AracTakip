@@ -112,7 +112,7 @@ public class frm_Anasayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_markaEkleActionPerformed
 
     private void jMenu_ModelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ModelEkleActionPerformed
-        frm_modelEkle s = new frm_modelEkle();
+        frm_ModelEkle s = new frm_ModelEkle();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenu_ModelEkleActionPerformed

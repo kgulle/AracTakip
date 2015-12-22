@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.sql.*;
 import javax.swing.*;
 
@@ -12,14 +13,33 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     PreparedStatement pst = null;
     Statement stmt = null;
     ResultSet rs = null;
+    Integer tmpTc = null;
 
     /**
      * Creates new form frm_MusteriEkle
      */
+    private void lst_musteriDoldur() {
+        DefaultListModel DLM = new DefaultListModel();
+        String sql = "select * from musteriler AS m JOIN ehliyetler e on m.tc=e.tc";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            DLM.addElement("");
+            while (rs.next()) {
+                String tmp = null;
+                tmp = rs.getInt("tc") + " - " + rs.getString("ad") + " - " + rs.getString("soyad");
+                DLM.addElement(tmp);
+            }
+            lst_musteriler.setModel(DLM);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     public frm_MusteriEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
-
+        lst_musteriDoldur();
     }
 
     /**
@@ -31,32 +51,35 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_ad = new javax.swing.JTextField();
-        txt_soyad = new javax.swing.JTextField();
-        txt_dogumTarih = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txt_tc = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        txt_dogumYer = new javax.swing.JTextField();
-        txt_ehliyetNo = new javax.swing.JTextField();
-        txt_ePosta = new javax.swing.JTextField();
         txt_telefon1 = new javax.swing.JTextField();
+        txt_verildigiYer = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         txt_telefon2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txt_ehliyetNo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txt_dogumYer = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txt_tc = new javax.swing.JTextField();
+        cmd_ekle = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_adres = new javax.swing.JTextArea();
-        cmd_ekle = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        txt_verildigiYer = new javax.swing.JTextField();
         txt_verildigiTarih = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txt_ad = new javax.swing.JTextField();
+        txt_soyad = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txt_dogumTarih = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txt_ePosta = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lst_musteriler = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_Dosya = new javax.swing.JMenu();
         jMenu_Ekle = new javax.swing.JMenu();
@@ -68,8 +91,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Müşteri Adı:");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Müşteri", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 13), new java.awt.Color(0, 204, 204))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Müşteri Soyad:");
@@ -77,37 +99,50 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel3.setText("Doğum Tarihi:");
 
-        txt_ad.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-
-        txt_soyad.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-
-        txt_dogumTarih.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel4.setText("Müşteri TC:");
-
-        txt_tc.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel5.setText("Doğum Yeri:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel6.setText("Ehliyet No:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel7.setText("E-Posta:");
+        jLabel10.setText("Adres:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel8.setText("Telefon 1:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel9.setText("Telefon 2:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel1.setText("Müşteri Adı:");
 
-        jLabel10.setText("Adres:");
-
-        txt_adres.setColumns(20);
-        txt_adres.setRows(5);
-        jScrollPane1.setViewportView(txt_adres);
+        txt_tc.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        txt_tc.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txt_tc.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txt_tcİnputMethodTextChanged(evt);
+            }
+        });
+        txt_tc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tcActionPerformed(evt);
+            }
+        });
+        txt_tc.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txt_tcPropertyChange(evt);
+            }
+        });
+        txt_tc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_tcKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_tcKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_tcKeyTyped(evt);
+            }
+        });
 
         cmd_ekle.setText("Ekle");
         cmd_ekle.addActionListener(new java.awt.event.ActionListener() {
@@ -116,9 +151,134 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
             }
         });
 
+        txt_adres.setColumns(20);
+        txt_adres.setRows(5);
+        jScrollPane1.setViewportView(txt_adres);
+
         jLabel11.setText("Verildiği Tarih:");
 
+        txt_ad.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+
+        txt_soyad.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+
         jLabel12.setText("Verildiği Yer:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel7.setText("E-Posta:");
+
+        txt_dogumTarih.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel9.setText("Telefon 2:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel4.setText("Müşteri TC:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_telefon2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_telefon1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_ePosta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_verildigiYer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_ehliyetNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txt_tc, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_ad, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_soyad, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_dogumTarih, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_dogumYer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(cmd_ekle)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txt_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_tc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2))
+                    .addComponent(txt_soyad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_dogumTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txt_dogumYer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_ehliyetNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txt_verildigiYer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_ePosta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txt_telefon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txt_telefon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmd_ekle)
+                .addContainerGap())
+        );
+
+        lst_musteriler.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lst_musterilerValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(lst_musteriler);
 
         jMenu_Dosya.setText("Dosya");
         jMenuBar1.add(jMenu_Dosya);
@@ -170,98 +330,22 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_telefon2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_telefon1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ePosta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_verildigiYer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ehliyetNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txt_tc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addComponent(txt_ad, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_soyad, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_dogumTarih, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_dogumYer, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(250, 250, 250)
-                        .addComponent(cmd_ekle)))
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txt_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txt_tc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2))
-                    .addComponent(txt_soyad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txt_dogumTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_dogumYer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_ehliyetNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(txt_verildigiYer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txt_ePosta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txt_telefon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txt_telefon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmd_ekle)
-                .addContainerGap(60, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -274,7 +358,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_markaEkleActionPerformed
 
     private void jMenu_ModelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ModelEkleActionPerformed
-        frm_modelEkle s = new frm_modelEkle();
+        frm_ModelEkle s = new frm_ModelEkle();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenu_ModelEkleActionPerformed
@@ -289,6 +373,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
 
     private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
         String sql = "INSERT INTO musteriler (tc,ad,soyad,dogum_tarih,dogum_yeri,adres,eposta,telefon1,telefon2) VALUES (" + txt_tc.getText() + ",'" + txt_ad.getText() + "','" + txt_soyad.getText() + "','" + txt_dogumTarih.getText() + "','" + txt_dogumYer.getText() + "','" + txt_adres.getText() + "','" + txt_ePosta.getText() + "'," + txt_telefon1.getText() + "," + txt_telefon2.getText() + ")";
+
         try {
             pst = conn.prepareStatement(sql);
             pst.executeQuery();
@@ -303,7 +388,52 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         } catch (Exception e) {
             //   JOptionPane.showMessageDialog(null, e);
         }
+
     }//GEN-LAST:event_cmd_ekleActionPerformed
+
+    private void lst_musterilerValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_musterilerValueChanged
+        String tmp = "1233kenn";
+        int foo = Integer.parseInt(tmp);
+        JOptionPane.showMessageDialog(null, foo);
+
+    }//GEN-LAST:event_lst_musterilerValueChanged
+
+    private void txt_tcKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyPressed
+
+    }//GEN-LAST:event_txt_tcKeyPressed
+
+    private void txt_tcİnputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txt_tcİnputMethodTextChanged
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tcİnputMethodTextChanged
+
+    private void txt_tcPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_tcPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tcPropertyChange
+
+    private void txt_tcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tcActionPerformed
+
+    }//GEN-LAST:event_txt_tcActionPerformed
+
+    private void txt_tcKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyReleased
+try {
+    Integer tmp;
+    
+        tmp = Integer.parseInt(txt_tc.getText());
+    } catch (NumberFormatException nfe) {
+        txt_tc.setText("");
+    }
+        if (txt_tc.getText().length() == 11) {
+            txt_tc.setBackground(Color.green);
+        } else {
+            txt_tc.setBackground(Color.red);
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_txt_tcKeyReleased
+
+    private void txt_tcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tcKeyTyped
 
     /**
      * @param args the command line arguments
@@ -362,7 +492,10 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenu_aracEkle;
     private javax.swing.JMenuItem jMenu_hakkinda;
     private javax.swing.JMenuItem jMenu_markaEkle;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> lst_musteriler;
     private javax.swing.JTextField txt_ad;
     private javax.swing.JTextArea txt_adres;
     private javax.swing.JTextField txt_dogumTarih;
