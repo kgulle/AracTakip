@@ -8,7 +8,7 @@ import javax.swing.*;
  * @author kenan
  */
 public class frm_MusteriEkle extends javax.swing.JFrame {
-
+    
     Connection conn = null;
     PreparedStatement pst = null;
     Statement stmt = null;
@@ -20,22 +20,20 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
      */
     private void lst_musteriDoldur() {
         DefaultListModel DLM = new DefaultListModel();
-        String sql = "select * from musteriler AS m JOIN ehliyetler e on m.tc=e.tc";
+        String sql = "select * from musteriler";
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            DLM.addElement("");
             while (rs.next()) {
                 String tmp = null;
-                tmp = rs.getInt("tc") + " - " + rs.getString("ad") + " - " + rs.getString("soyad");
-                DLM.addElement(tmp);
+                DLM.addElement(rs.getString("tc"));
             }
             lst_musteriler.setModel(DLM);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+    
     public frm_MusteriEkle() {
         initComponents();
         conn = javaconnect.ConnecrDB();
@@ -78,18 +76,30 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txt_ePosta = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        cmd_sil = new javax.swing.JButton();
+        cmd_duzenle = new javax.swing.JButton();
+        cmd_temizle = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lst_musteriler = new javax.swing.JList<>();
+        jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_Dosya = new javax.swing.JMenu();
+        menu_kirayaVer = new javax.swing.JMenuItem();
+        menu_cikis = new javax.swing.JMenuItem();
         jMenu_Ekle = new javax.swing.JMenu();
-        jMenu_markaEkle = new javax.swing.JMenuItem();
-        jMenu_ModelEkle = new javax.swing.JMenuItem();
-        jMenu_aracEkle = new javax.swing.JMenuItem();
+        menu_markaEkle = new javax.swing.JMenuItem();
+        menu_modelEkle = new javax.swing.JMenuItem();
+        Menu_aracEkle = new javax.swing.JMenuItem();
+        menu_musteriEkle = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenu_hakkinda = new javax.swing.JMenuItem();
+        menu_hakkinda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Müşteri İşlemleri");
+        setSize(new java.awt.Dimension(801, 577));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Müşteri", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 13), new java.awt.Color(0, 204, 204))); // NOI18N
 
@@ -167,12 +177,44 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         jLabel7.setText("E-Posta:");
 
         txt_dogumTarih.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        txt_dogumTarih.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_dogumTarihActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel9.setText("Telefon 2:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Müşteri TC:");
+
+        cmd_sil.setText("Sil");
+        cmd_sil.setEnabled(false);
+        cmd_sil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmd_silActionPerformed(evt);
+            }
+        });
+
+        cmd_duzenle.setText("Düzenle");
+        cmd_duzenle.setEnabled(false);
+        cmd_duzenle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmd_duzenleActionPerformed(evt);
+            }
+        });
+
+        cmd_temizle.setText("Temizle");
+        cmd_temizle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmd_temizleActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("2013-11-01");
+
+        jLabel15.setText("2013-11-01");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,40 +244,49 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
                             .addComponent(txt_ePosta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_verildigiYer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_ehliyetNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txt_tc, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_ad, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_soyad, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_dogumTarih, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_dogumYer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(240, 240, 240)
+                            .addComponent(txt_tc, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_ad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_soyad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txt_dogumTarih, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14))
+                            .addComponent(txt_dogumYer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cmd_temizle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmd_duzenle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmd_sil, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmd_ekle)))
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txt_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txt_tc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txt_tc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
                     .addComponent(txt_soyad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txt_dogumTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_dogumTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -251,7 +302,8 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_verildigiTarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -269,9 +321,15 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmd_ekle)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmd_ekle)
+                    .addComponent(cmd_sil)
+                    .addComponent(cmd_duzenle)
+                    .addComponent(cmd_temizle))
                 .addContainerGap())
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kayıtlı Müşteriler", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 13), new java.awt.Color(0, 153, 204))); // NOI18N
 
         lst_musteriler.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -280,46 +338,96 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(lst_musteriler);
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
+        jLabel13.setText("TC");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel13)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+
         jMenu_Dosya.setText("Dosya");
+
+        menu_kirayaVer.setText("Kiraya Ver");
+        menu_kirayaVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_kirayaVerActionPerformed(evt);
+            }
+        });
+        jMenu_Dosya.add(menu_kirayaVer);
+
+        menu_cikis.setText("Çıkış");
+        menu_cikis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_cikisActionPerformed(evt);
+            }
+        });
+        jMenu_Dosya.add(menu_cikis);
+
         jMenuBar1.add(jMenu_Dosya);
 
         jMenu_Ekle.setText("Ekle");
 
-        jMenu_markaEkle.setText("Marka Ekle");
-        jMenu_markaEkle.addActionListener(new java.awt.event.ActionListener() {
+        menu_markaEkle.setText("Marka Ekle");
+        menu_markaEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_markaEkleActionPerformed(evt);
+                menu_markaEkleActionPerformed(evt);
             }
         });
-        jMenu_Ekle.add(jMenu_markaEkle);
+        jMenu_Ekle.add(menu_markaEkle);
 
-        jMenu_ModelEkle.setText("Model Ekle");
-        jMenu_ModelEkle.addActionListener(new java.awt.event.ActionListener() {
+        menu_modelEkle.setText("Model Ekle");
+        menu_modelEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_ModelEkleActionPerformed(evt);
+                menu_modelEkleActionPerformed(evt);
             }
         });
-        jMenu_Ekle.add(jMenu_ModelEkle);
+        jMenu_Ekle.add(menu_modelEkle);
 
-        jMenu_aracEkle.setText("Araç Ekle");
-        jMenu_aracEkle.addActionListener(new java.awt.event.ActionListener() {
+        Menu_aracEkle.setText("Araç Ekle");
+        Menu_aracEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_aracEkleActionPerformed(evt);
+                Menu_aracEkleActionPerformed(evt);
             }
         });
-        jMenu_Ekle.add(jMenu_aracEkle);
+        jMenu_Ekle.add(Menu_aracEkle);
+
+        menu_musteriEkle.setText("Müşteri Ekle");
+        menu_musteriEkle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_musteriEkleActionPerformed(evt);
+            }
+        });
+        jMenu_Ekle.add(menu_musteriEkle);
 
         jMenuBar1.add(jMenu_Ekle);
 
         jMenu2.setText("Yardım");
 
-        jMenu_hakkinda.setText("Hakkında");
-        jMenu_hakkinda.addActionListener(new java.awt.event.ActionListener() {
+        menu_hakkinda.setText("Hakkında");
+        menu_hakkinda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_hakkindaActionPerformed(evt);
+                menu_hakkindaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenu_hakkinda);
+        jMenu2.add(menu_hakkinda);
 
         jMenuBar1.add(jMenu2);
 
@@ -332,70 +440,72 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu_markaEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_markaEkleActionPerformed
-        frm_MarkaEkle s = new frm_MarkaEkle();
-        s.setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_jMenu_markaEkleActionPerformed
-
-    private void jMenu_ModelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ModelEkleActionPerformed
-        frm_ModelEkle s = new frm_ModelEkle();
-        s.setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_jMenu_ModelEkleActionPerformed
-
-    private void jMenu_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_aracEkleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu_aracEkleActionPerformed
-
-    private void jMenu_hakkindaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_hakkindaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu_hakkindaActionPerformed
-
     private void cmd_ekleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_ekleActionPerformed
-        String sql = "INSERT INTO musteriler (tc,ad,soyad,dogum_tarih,dogum_yeri,adres,eposta,telefon1,telefon2) VALUES (" + txt_tc.getText() + ",'" + txt_ad.getText() + "','" + txt_soyad.getText() + "','" + txt_dogumTarih.getText() + "','" + txt_dogumYer.getText() + "','" + txt_adres.getText() + "','" + txt_ePosta.getText() + "'," + txt_telefon1.getText() + "," + txt_telefon2.getText() + ")";
-
+        String sql = "INSERT INTO musteriler (tc,ad,soyad,adres,telefon1,telefon2,dogum_tarih,dogum_yeri) VALUES (" + txt_tc.getText() + ",'" + txt_ad.getText() + "','" + txt_soyad.getText() + "','" + txt_adres.getText() + "'," + txt_telefon1.getText() + "," + txt_telefon2.getText() + ",'" + txt_dogumTarih.getText() + "','" + txt_dogumYer.getText() + "')";
+        
         try {
             pst = conn.prepareStatement(sql);
             pst.executeQuery();
             JOptionPane.showMessageDialog(null, "Kayit Eklendi");
         } catch (Exception e) {
-            //  JOptionPane.showMessageDialog(null, e);
+              JOptionPane.showMessageDialog(null, e);
         }
+        
         String sql1 = "INSERT INTO ehliyetler (tc,ehliyet_no,verildigi_yer,verildigi_tarih) VALUES (" + txt_tc.getText() + "," + txt_ehliyetNo.getText() + ",'" + txt_verildigiYer.getText() + "','" + txt_verildigiTarih.getText() + "')";
         try {
             pst = conn.prepareStatement(sql1);
             pst.executeQuery();
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, e);
+              JOptionPane.showMessageDialog(null, e);
         }
-
+        lst_musteriDoldur();
+        cmd_temizleActionPerformed(evt);
     }//GEN-LAST:event_cmd_ekleActionPerformed
 
     private void lst_musterilerValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_musterilerValueChanged
-        String tmp = "1233kenn";
-        int foo = Integer.parseInt(tmp);
-        JOptionPane.showMessageDialog(null, foo);
-
+        
+        String sql = "select * from musteriler left join ehliyetler on musteriler.tc=ehliyetler.tc where musteriler.tc=" + lst_musteriler.getSelectedValue() + "";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                txt_tc.setText(rs.getString("tc"));
+                txt_ad.setText(rs.getString("ad"));
+                txt_soyad.setText(rs.getString("soyad"));
+                txt_adres.setText(rs.getString("adres"));
+                txt_ePosta.setText(rs.getString("eposta"));
+                txt_telefon1.setText(rs.getString("telefon1"));
+                txt_telefon2.setText(rs.getString("telefon2"));
+                txt_dogumTarih.setText(rs.getString("dogum_tarih"));
+                txt_dogumYer.setText(rs.getString("dogum_yeri"));
+                txt_tc.setText(rs.getString("tc"));
+                txt_ehliyetNo.setText(rs.getString("ehliyet_no"));
+                txt_verildigiYer.setText(rs.getString("verildigi_yer"));
+                txt_verildigiTarih.setText(rs.getString("verildigi_tarih"));
+            }
+        } catch (Exception e) {
+        }
+        cmd_duzenle.setEnabled(true);
+        cmd_sil.setEnabled(true);
+        cmd_ekle.setEnabled(false);
+        txt_tc.setEnabled(false);
     }//GEN-LAST:event_lst_musterilerValueChanged
 
     private void txt_tcKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyPressed
@@ -416,13 +526,7 @@ public class frm_MusteriEkle extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tcActionPerformed
 
     private void txt_tcKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyReleased
-try {
-    Integer tmp;
-    
-        tmp = Integer.parseInt(txt_tc.getText());
-    } catch (NumberFormatException nfe) {
-        txt_tc.setText("");
-    }
+     
         if (txt_tc.getText().length() == 11) {
             txt_tc.setBackground(Color.green);
         } else {
@@ -434,6 +538,98 @@ try {
     private void txt_tcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tcKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tcKeyTyped
+
+    private void cmd_duzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_duzenleActionPerformed
+        String sql = "UPDATE musteriler SET  ad='" + txt_ad.getText() + "',soyad='" + txt_soyad.getText() + "',adres='" + txt_adres.getText() + "',eposta='" + txt_ePosta.getText() + "',telefon1=" + txt_telefon1.getText() + ",telefon2=" + txt_telefon2.getText() + ",dogum_tarih='" + txt_dogumTarih.getText() + "',dogum_yeri='" + txt_dogumYer.getText() + "' WHERE tc=" + txt_tc.getText() + "";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, txt_tc.getText() + " Kişisi Düzenlendi ");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        lst_musteriDoldur();
+        cmd_temizleActionPerformed(evt);
+        
+    }//GEN-LAST:event_cmd_duzenleActionPerformed
+
+    private void cmd_silActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_silActionPerformed
+        
+        String sql = "delete from musteriler where tc=" + txt_tc.getText() + "";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, txt_ad.getText() + " Kişisi Silindi ");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        lst_musteriDoldur();
+        cmd_temizleActionPerformed(evt);
+        
+    }//GEN-LAST:event_cmd_silActionPerformed
+
+    private void cmd_temizleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmd_temizleActionPerformed
+        cmd_duzenle.setEnabled(false);
+        cmd_sil.setEnabled(false);
+        cmd_ekle.setEnabled(true);
+        txt_tc.setEnabled(true);
+        txt_ad.setText(null);
+        txt_adres.setText(null);
+        txt_dogumTarih.setText(null);
+        txt_dogumYer.setText(null);
+        txt_ePosta.setText(null);
+        txt_ehliyetNo.setText(null);
+        txt_soyad.setText(null);
+        txt_tc.setText(null);
+        txt_telefon1.setText(null);
+        txt_telefon2.setText(null);
+        txt_verildigiTarih.setText(null);
+        txt_verildigiYer.setText(null);
+    }//GEN-LAST:event_cmd_temizleActionPerformed
+
+    private void txt_dogumTarihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dogumTarihActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_dogumTarihActionPerformed
+
+    private void menu_kirayaVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_kirayaVerActionPerformed
+        frm_AracEkle s = new frm_AracEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_menu_kirayaVerActionPerformed
+
+    private void menu_cikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_cikisActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menu_cikisActionPerformed
+
+    private void menu_markaEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_markaEkleActionPerformed
+        frm_MarkaEkle s = new frm_MarkaEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_menu_markaEkleActionPerformed
+
+    private void menu_modelEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_modelEkleActionPerformed
+        frm_ModelEkle s = new frm_ModelEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_menu_modelEkleActionPerformed
+
+    private void Menu_aracEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_aracEkleActionPerformed
+        frm_AracEkle s = new frm_AracEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_Menu_aracEkleActionPerformed
+
+    private void menu_musteriEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_musteriEkleActionPerformed
+        frm_MusteriEkle s = new frm_MusteriEkle();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_menu_musteriEkleActionPerformed
+
+    private void menu_hakkindaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_hakkindaActionPerformed
+        frm_Hakkinda s = new frm_Hakkinda();
+        s.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_menu_hakkindaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,11 +667,18 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Menu_aracEkle;
+    private javax.swing.JButton cmd_duzenle;
     private javax.swing.JButton cmd_ekle;
+    private javax.swing.JButton cmd_sil;
+    private javax.swing.JButton cmd_temizle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -488,14 +691,17 @@ try {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenu_Dosya;
     private javax.swing.JMenu jMenu_Ekle;
-    private javax.swing.JMenuItem jMenu_ModelEkle;
-    private javax.swing.JMenuItem jMenu_aracEkle;
-    private javax.swing.JMenuItem jMenu_hakkinda;
-    private javax.swing.JMenuItem jMenu_markaEkle;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lst_musteriler;
+    private javax.swing.JMenuItem menu_cikis;
+    private javax.swing.JMenuItem menu_hakkinda;
+    private javax.swing.JMenuItem menu_kirayaVer;
+    private javax.swing.JMenuItem menu_markaEkle;
+    private javax.swing.JMenuItem menu_modelEkle;
+    private javax.swing.JMenuItem menu_musteriEkle;
     private javax.swing.JTextField txt_ad;
     private javax.swing.JTextArea txt_adres;
     private javax.swing.JTextField txt_dogumTarih;

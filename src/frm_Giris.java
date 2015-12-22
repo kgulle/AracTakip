@@ -8,10 +8,8 @@
  *
  * @author kenan
  */
-import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
-import org.postgresql.*;
 
 
 public class frm_Giris extends javax.swing.JFrame {
@@ -46,15 +44,15 @@ public class frm_Giris extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("[ Araç Takip Programı ]");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giriş", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giriş", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 153, 204))); // NOI18N
 
         txt_kullanici.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_kullanici.setText("1");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Şifre :");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Kullanici Adı :");
 
         cmd_girisyap.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -109,7 +107,7 @@ public class frm_Giris extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +129,7 @@ public class frm_Giris extends javax.swing.JFrame {
             rs=pst.executeQuery();
             if(rs.next()) {
              //   JOptionPane.showMessageDialog(null, "Giriş basarili");
-                frm_Anasayfa s=new  frm_Anasayfa();
+                frm_KirayaVer s=new  frm_KirayaVer();
                 s.setVisible(true);
                 setVisible(false);
             } else                

@@ -1,5 +1,3 @@
-
-import org.postgresql.*;
 import java.sql.*;
 import javax.swing.*;
 
